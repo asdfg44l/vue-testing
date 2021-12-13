@@ -62,7 +62,7 @@
 
             </custom-input>
           </div>
-          <div class="list-content container">
+          <div class="list-content">
             <div class="row">
               <div class="col-3 mb-2" v-for="item in pairList" :key="item.phone">
                 <custom-card
