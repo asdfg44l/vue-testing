@@ -6,7 +6,8 @@
 - 可以使用右上角的切
 ## 建構核心思想
 這裡是選擇使用 Vue Cli 來完成功能，主要用 todolist 以及使用者資料搜尋來 demo 需求。
-Component 有兩個，CustomInput 可以藉由變更 mode 的值來選擇要使用 text、radio或是 select，select的 option 可以 slot 來插入。
+
+Component: CustomInput 可以藉由變更 mode 的值來選擇要使用 text、radio或是 select，select的 option 可以 slot 來插入。
 
 Computed 應用於經過計算後的資料，像是 todolist與使用者資料搜尋的呈現，可以去監聽篩選條件的改變並回傳適當的資料。
 
