@@ -22,7 +22,8 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/PairSearch.vue'),
     meta: {
-      title: '關於'
+      title: '幫你配對',
+      description: '配對網站,幫你找到最完美的另一半'
     }
   }
 ]
