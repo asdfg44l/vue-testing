@@ -233,3 +233,13 @@ small {
     top: 0;
     z-index: 2001;
 }
+
+//router transition
+.fade-enter, .fade-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: all .5s;
+}
