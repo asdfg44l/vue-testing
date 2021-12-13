@@ -1,0 +1,54 @@
+$default: (
+    main-background: #e2ece9,
+    main: #1d3557,
+    main-text: #f1faee,
+    link-active: #a8dadc,
+    list-main: #adb5bd,
+    list-item-border: #457b9d
+);
+
+$orange: (
+    main-background: #f8edeb,
+    main: #e36414,
+    main-text: #f8edeb,
+    link-active: #264653,
+    list-main: #fec89a,
+    list-item-border: #457b9d
+);
+
+$all-theme: (
+    default: $default,
+    orange: $orange
+);
+
+@each $name, $theme in $all-theme {
+    .theme-#{$name} {
+        background-color: map-get($map: $theme, $key: main-background);
+        .navbar {
+            background-color: map-get($map: $theme, $key: main);
+            .navbar-brand {
+                color: map-get($map: $theme, $key: main-text);
+            }
+        }
+        .navbar-nav {
+            .nav-link {
+                color: map-get($map: $theme, $key: main-text);
+            }
+        }
+    
+        .router-link-exact-active {
+            color: map-get($map: $theme, $key: link-active) !important;
+        }
+    
+        .custom-list {
+            .list-header, .list-footer {
+                background-color: map-get($map: $theme, $key: list-main);
+            }
+            .list-content {
+                .list-item {
+                    border-color: map-get($map: $theme, $key: list-item-border);
+                }
+            }
+        }
+    }
+}

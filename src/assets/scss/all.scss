@@ -1,5 +1,6 @@
 @import url('./reset.scss');
 @import url('./switchButton.scss');
+@import url('./customTheme.scss');
 
 small {
     font-size: .75rem;
@@ -23,40 +24,11 @@ small {
         padding: 0 15px;
     }
 }
-
-.col-3 {
-    flex: 0 0 auto;
-    width: 25%;
-}
-
-.col-4 {
-    flex: 0 0 auto;
-    width: 33.333333%;
-}
-
-.col-6 {
-    flex: 0 0 auto;
-    width: 50%;
-}
-
-.col-8 {
-    flex: 0 0 auto;
-    width: 66.6666%;
-}
-
-.col-9 {
-    flex: 0 0 auto;
-    width: 75%;
-}
-
-.col-10 {
-    flex: 0 0 auto;
-    width: 83.333333%;
-}
-
-.col-12 {
-    flex: 0 0 auto;
-    width: 100%;
+@for $var from 1 to 12 {
+    .col-#{$var} {
+        flex: 0 0 auto;
+        width: calc(100% * #{$var}/12);
+    }
 }
 
 .d-flex {
@@ -138,61 +110,6 @@ small {
     border-radius: 5px;
     &:focus {
         outline: unset;
-    }
-}
-
-$default: (
-    main-background: #e2ece9,
-    main: #1d3557,
-    main-text: #f1faee,
-    link-active: #a8dadc,
-    list-main: #adb5bd,
-    list-item-border: #457b9d
-);
-
-$orange: (
-    main-background: #f8edeb,
-    main: #e36414,
-    main-text: #f8edeb,
-    link-active: #264653,
-    list-main: #fec89a,
-    list-item-border: #457b9d
-);
-
-$all-theme: (
-    default: $default,
-    orange: $orange
-);
-
-@each $name, $theme in $all-theme {
-    .theme-#{$name} {
-        background-color: map-get($map: $theme, $key: main-background);
-        .navbar {
-            background-color: map-get($map: $theme, $key: main);
-            .navbar-brand {
-                color: map-get($map: $theme, $key: main-text);
-            }
-        }
-        .navbar-nav {
-            .nav-link {
-                color: map-get($map: $theme, $key: main-text);
-            }
-        }
-    
-        .router-link-exact-active {
-            color: map-get($map: $theme, $key: link-active) !important;
-        }
-    
-        .custom-list {
-            .list-header, .list-footer {
-                background-color: map-get($map: $theme, $key: list-main);
-            }
-            .list-content {
-                .list-item {
-                    border-color: map-get($map: $theme, $key: list-item-border);
-                }
-            }
-        }
     }
 }
 
