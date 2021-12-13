@@ -2,7 +2,7 @@
   <div class="container mx-auto">
     <div class="row">
       <div class="col-12">
-        <div class="custom-list">
+        <div class="custom-list" v-if="pairList.length > 0">
           <div class="list-header d-flex justify-content-between sticky-top">
             <div class="d-flex align-item-center">
               <custom-input
