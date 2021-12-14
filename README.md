@@ -1,11 +1,13 @@
 # 來個小測驗 (Vue testing)
-此專案提供了 todolist 功能，以及使用者資料搜尋功能(fake data)
+此專案提供了 todolist 功能，以及使用者資料搜尋功能
 ## 功能列表
 - todolist 有基本的新增、編輯和刪除(多筆)功能，並可以註記為已完成
 - 使用者資料可以依照性別、居住地和姓名來查找資料
 - 可以使用右上角的切換鈕來變更網頁樣式
 ## 建構核心思想
 這裡是選擇使用 Vue Cli 來完成功能，主要用 todolist 以及使用者資料搜尋來 demo 需求。
+
+使用者資料搜尋的資料是去串接 random user generator的 API取得。
 
 Component: CustomInput 可以藉由變更 mode 的值來選擇要使用 text、radio或是 select，select的 option 可以 slot 來插入。
 
