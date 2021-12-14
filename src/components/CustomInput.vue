@@ -20,6 +20,7 @@
                 :name="name"
                 :id="id"
                 :value="setValue"
+                :checked="checked"
                 @change="updateValue"
             >
             <label :for="id">
@@ -63,6 +64,9 @@ export default {
         },
         labelName: {
             type: String
+        },
+        checked: {
+            type: Boolean
         }
     },
     methods: {

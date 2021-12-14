@@ -10,6 +10,7 @@
                 mode="radio"
                 name="gender"
                 id="gender"
+                :checked="true"
                 set-value=""
                 v-model="filter.gender"
               >
