@@ -1,0 +1,24 @@
+//marquee
+.marquee-layout {
+    border: 1px solid $info;
+    border-radius: .25rem;
+}
+
+.marquee {
+    width: 100%;
+    padding: .5rem .75rem;
+    overflow: hidden;
+    &-item {
+        display: none;
+        margin-bottom: 0;
+    }
+    &-active {
+        display: block;
+        animation-name: marquee;
+        animation-duration: 5s;
+        animation-timing-function: linear;
+    }
+    &-infinite {
+        animation-iteration-count: infinite;
+    }
+}

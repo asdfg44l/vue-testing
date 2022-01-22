@@ -1,0 +1,6 @@
+
+@keyframes marquee {
+    0%    { transform: translateX(calc(100% + 0.75rem)); }
+    50%   { transform: translateX(calc(0%)); }
+    100%  { transform: translateX(calc(-100% - 0.75rem)); }
+}

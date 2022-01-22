@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div v-if="mode == 'text'">
+        <template v-if="mode == 'text'">
             <label v-if="labelName" :for="id">{{ labelName }}: </label>
             <input
-                class="form-control"
+                :class="['form-control', ...className]"
                 type="text"
                 :name="name"
                 :id="id"
@@ -11,11 +11,11 @@
                 :placeholder="placeholder"
                 @input="updateValue"
             >
-        </div>
+        </template>
         
-        <div v-if="mode == 'radio'" class="d-flex align-item-center">
+        <template v-if="mode == 'radio'" class="d-flex align-items-center">
             <input
-                class="m-0 mr-1"
+                :class="['m-0', 'me-1', ...className]"
                 type="radio"
                 :name="name"
                 :id="id"
@@ -26,10 +26,10 @@
             <label :for="id">
                 <slot></slot>
             </label>
-        </div>
+        </template>
         <select
             v-if="mode == 'select'"
-            class="form-control"
+            :class="['form-select', ...className]"
             :name="name"
             :id="id"
             @change="updateValue"
@@ -58,6 +58,9 @@ export default {
         },
         value: {
             type: String || Number
+        },
+        className: {
+            type: Array
         },
         placeholder: {
             type: String
