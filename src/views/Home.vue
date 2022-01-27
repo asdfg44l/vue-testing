@@ -6,6 +6,7 @@
         <!-- <custom-marquee :list="marqueeList" class="mt-2">
         </custom-marquee> -->
         <!-- todo-list -->
+        <button class="btn btn-success btn-sm mt-2" type="button" @click.prevent="exportExcel">輸出 Excel</button>
         <div class="custom-list mb-3 mt-4">
           <div class="list-header d-flex justify-content-between">
             <custom-input
@@ -87,7 +88,7 @@
         <small class="fs-sm">*若要使用編輯功能, 可以點擊兩下目標todo, 變更完成後再按 enter</small>
       </div>
       <div class="col-10 mt-5">
-        <input ref="upload-excel" type="file" name="excel" id="">
+        <input @change.prevent="readExcel" type="file" name="excel" id="">
       </div>
     </div>
   </div>
@@ -96,7 +97,7 @@
 <script>
 import { getRandomID } from "@/libs/common.js"; //給每個todo一個ID
 import CustomInput from "@/components/CustomInput.vue";
-// import { Workbook } from "@/libs/manageExcel.js";
+import { Workbook, excel_to_json, jsonList_to_CSV } from "@/libs/manageExcel.js";
 // import XLSX from 'xlsx';
 // import FileSaver from 'file-saver';
 // import { ab2str } from '@/libs/excelImport.js';
@@ -185,6 +186,52 @@ export default {
       //clear
       this.todoEditID = ''
       this.todoEditText = ''
+    },
+    exportExcel() {
+      let wb = new Workbook()
+      const excel_header = ['標題', '狀態', '創建日期']
+      const attrs_to_show = ['title', 'status', 'create_date']
+      const data_format = {
+        create_date(row) {
+          return row.toLocaleString('zh-TW', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+          })
+        }
+      }
+      wb.appendSheet({ jsonDataList: this.todoList, excel_header, attrs_to_show, data_format })
+      wb.toBlob()
+      wb.saveAs('test')
+    },
+    exportCSV() {
+      const excel_header = ['標題', '狀態', '創建日期']
+      const attrs_to_show = ['title', 'status', 'create_date']
+      const data_format = {
+        create_date(row) {
+          return row.toLocaleString('zh-TW', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+          })
+        }
+      }
+
+      let jtocsv = new jsonList_to_CSV()
+      jtocsv.append_CSV({ jsonDataList: this.todoList, excel_header, attrs_to_show, data_format })
+      jtocsv.saveAs('csv_test')
+    },
+    async readExcel(e) {
+      const file = e.target.files[0]
+      console.log(await excel_to_json(file))
     }
   },
   computed: {
@@ -208,60 +255,6 @@ export default {
         return item
       })
     }
-  },
-  mounted() {
-    // const fs = this.$refs['upload-excel'];
-    // fs.addEventListener('change', () => {
-    //   const file = fs.files[0]
-    //   const fileReader = new FileReader()
-    //   fileReader.readAsArrayBuffer(file);
-
-    //   fileReader.onload = function() {
-    //     const result = fileReader.result
-        
-    //     const sheets = XLSX.read(result).Sheets
-        
-    //     console.log(XLSX.utils.sheet_to_json(sheets['sheet_name_1']))
-    //   }
-      
-    // })
-
-    // const vm = this;
-    // const excel_header = [
-    //   "代辦事項",
-    //   "狀態",
-    //   "創建時間"
-    // ]
-    // const attrs_to_show = [
-    //   "title",
-    //   "status",
-    //   "create_date"
-    // ]
-    // const data_format = {
-    //   create_date: function(row) {
-    //     return row.toLocaleString('zh-TW', {
-    //       year: 'numeric',
-    //       month: '2-digit',
-    //       day: '2-digit',
-    //       hour: '2-digit',
-    //       minute: '2-digit',
-    //       second: '2-digit',
-    //       hour12: false
-    //     })
-    //   }
-    // }
-    // const jsonDataList = [
-    //   { title: '吃早餐', status: '已完成', create_date:  new Date(), trash: '52415' },
-    //   { title: '吃午餐', status: '已完成', create_date: new Date(), trash: '52415' },
-    //   { title: '吃晚餐', status: '未完成', create_date: new Date(), trash: '52415' }
-    // ]
-
-    // const excel_config = { jsonDataList, attrs_to_show, excel_header, data_format }
-
-    // const wb = new Workbook()
-    // wb.appendSheet(excel_config, '測試用工作表')
-    // wb.toBlob()
-    // wb.saveAs('test111.xlsx')
   }
 }
 </script>

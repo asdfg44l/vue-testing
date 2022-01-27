@@ -10,6 +10,7 @@
           <div class="navbar-nav flex-fill">
             <router-link class="nav-link" to="/">Todo-List</router-link>
             <router-link class="nav-link" to="/pairSearch">Pair-Search</router-link>
+            <router-link class="nav-link" to="/cryptoTest">Crypto</router-link>
           </div>
           <div class="navbar-append ml-auto mr-1">
             <!-- Rounded switch -->

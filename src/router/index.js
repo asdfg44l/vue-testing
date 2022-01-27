@@ -20,10 +20,19 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/PairSearch.vue'),
+    component: () => import(/* webpackChunkName: "PairSearch" */ '../views/PairSearch.vue'),
     meta: {
       title: '幫你配對',
       description: '配對網站,幫你找到最完美的另一半'
+    }
+  },
+  {
+    path: '/cryptoTest',
+    name: 'CryptoTest',
+    component: () => import(/* webpackChunkName: "CryptoTest" */ '../views/CryptoTest.vue'),
+    meta: {
+      title: '加密',
+      description: "資料加密與壓縮測試"
     }
   }
 ]
