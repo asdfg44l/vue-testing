@@ -1,0 +1,83 @@
+// test('Check the result of 5 +', () => {
+//     expect(5 + 2).toBe(7)
+// })
+
+// test('Use toMatch test', () => {
+//     expect('Happy new year').toMatch(/new/)
+// })
+
+// test('Check the object type', () => {
+//     let dogeA = {
+//         name: 'mochi' 
+//     }
+//     dogeA.age = 31
+
+//     //test string
+//     expect(dogeA.name).not.toBe('')
+
+//     //test object
+//     expect(dogeA).toEqual({ name: 'mochi', age: 31 })
+// })
+
+// test('test integer', () => {
+//     //整數可以用 toBe 或 toEqual 斷言
+//     expect(5).toBe(5)
+//     expect(5).toEqual(5)
+
+//     //測試輸出值是否大於期望值
+//     expect(5).toBeGreaterThan(4)
+
+//     //測試輸出值是否大於等於期望值
+//     expect(5).toBeGreaterThanOrEqual(5)
+
+//     //測試輸出值是否小於期望值
+//     expect(5).toBeLessThan(6)
+
+//     //測試輸出值是否小於等於期望值
+//     expect(5).toBeLessThanOrEqual(5)
+// })
+
+// // js的小數點運算會有誤差, 所以不可以使用 toBe or toEqual
+// test('test float', () => {
+
+//     expect(0.1 + 0.2).toBeCloseTo(0.3)
+//     //需完全相等
+//     // expect(0.1 + 0.2).toBe(0.3)
+// })
+
+// test('For array test in jest', () => {
+//     let arrA = ['A', 'B', 'C']
+
+//     //檢查陣列內是否有特定值
+//     expect(arrA).toContain('B')
+
+//     //檢查陣列中每個位置都不得為空
+//     for(let i in arrA) {
+//         expect(arrA[i]).not.toBe('')
+//     }
+// })
+
+// test('Special value', () => {
+//     //期望值為 true
+//     expect(true).toBeTruthy()
+
+//     //期望值為 false
+//     expect(false).toBeFalsy()
+
+//     //期望值為 null
+//     expect(null).toBeNull()
+
+//     //期望值為 undefined
+//     expect(undefined).toBeUndefined()
+
+//     //期望值為 undefined 以外的值
+//     expect(null).toBeDefined()
+// })
+
+let func = require('../libs/forTest')
+
+test('test sum', () => {
+    expect(func.sum(2, 5)).toBe(2)
+
+    expect(func.sum(10, 12)).toBe(22)
+})
