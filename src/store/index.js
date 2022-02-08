@@ -32,6 +32,7 @@ const dataState = createPersistedState({
 
 //modules
 import { apple } from './apple'
+import { exchange } from './exchange'
 
 Vue.use(Vuex)
 
@@ -52,7 +53,8 @@ const store = new Vuex.Store({
         getTestID: (state) => state.testid
     },
     modules: {
-        apple
+        apple,
+        exchange
     },
     plugins: [dataState]
 })
