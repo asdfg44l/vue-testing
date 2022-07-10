@@ -7,6 +7,7 @@
         </custom-marquee> -->
         <!-- todo-list -->
         <button class="btn btn-success btn-sm mt-2" type="button" @click.prevent="exportExcel">輸出 Excel</button>
+        <button class="btn btn-success btn-sm mt-2 ms-2" type="button" @click.prevent="exportCSV">輸出 CSV</button>
         <div class="custom-list mb-3 mt-4">
           <div class="list-header d-flex justify-content-between">
             <custom-input
@@ -97,7 +98,7 @@
 <script>
 import { getRandomID } from "@/libs/common.js"; //給每個todo一個ID
 import CustomInput from "@/components/CustomInput.vue";
-import { Workbook, excel_to_json, jsonList_to_CSV } from "@/libs/manageExcel.js";
+import { Workbook, excel_to_json, JsonListToCSV } from "@/libs/manageExcel.js";
 // import XLSX from 'xlsx';
 // import FileSaver from 'file-saver';
 // import { ab2str } from '@/libs/excelImport.js';
@@ -225,8 +226,9 @@ export default {
         }
       }
 
-      let jtocsv = new jsonList_to_CSV()
+      let jtocsv = new JsonListToCSV()
       jtocsv.append_CSV({ jsonDataList: this.todoList, excel_header, attrs_to_show, data_format })
+      jtocsv.toBlob()
       jtocsv.saveAs('csv_test')
     },
     async readExcel(e) {
@@ -255,6 +257,10 @@ export default {
         return item
       })
     }
+  },
+  created() {
+    let a = this.$term('test string')
+    console.log(a)
   }
 }
 </script>

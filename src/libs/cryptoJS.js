@@ -21,23 +21,23 @@ export function cryptoJS({ salt= 54564, iv= 1544 }) {
             if(cipherParams.iv) jsonObj.iv = cipherParams.iv.toString()
             if(cipherParams.salt) jsonObj.s = cipherParams.salt.toString()
 
-
             return JSON.stringify(jsonObj)
         },
-        // 解密後針對每個屬性做處理
+        // 解密前針對每個屬性做處理
         parse: function(jsonStr) {
             var jsonObj = JSON.parse(jsonStr)
             
             // 新建一個 cipharParams
-            var cipharParams = CryptoJS.lib.CipherParams.create({
+            var cipherParams = CryptoJS.lib.CipherParams.create({
                 ciphertext: CryptoJS.enc.Base64.parse(jsonObj.ct) // add ciphertext
             })
 
             // add vi or salt
-            if(jsonObj.vi) cipharParams.vi = CryptoJS.enc.Hex.parse(jsonObj.vi)
-            if(jsonObj.s) cipharParams.salt = CryptoJS.enc.Hex.parse(jsonObj.s)
+            // 這兩個值必須轉成 16進位制
+            if(jsonObj.iv) cipherParams.iv = CryptoJS.enc.Hex.parse(jsonObj.iv)
+            if(jsonObj.s) cipherParams.salt = CryptoJS.enc.Hex.parse(jsonObj.s)
 
-            return cipharParams
+            return cipherParams
         }
     }
 
@@ -46,26 +46,24 @@ export function cryptoJS({ salt= 54564, iv= 1544 }) {
 
         value = JSON.stringify(value) //字串化 json物件
         //加密並生成密文
-        const cipherParams = CryptoJS.AES.encrypt(value, secret, {
+        const cipherText = CryptoJS.AES.encrypt(value, secret, {
             format: this.formatter,
             salt,
             iv
-        }).toString()
+        }).toString() //cipherParams stringify to ciphertext
 
-        return LZString.compress(cipherParams) //回傳並壓縮密文
+        return LZString.compress(cipherText) //回傳並壓縮密文
     }
 
-    this.decrypted = function(encryptObj, secret) {
-        const { salt, iv } = _private.get(this)
-
-        encryptObj = LZString.decompress(encryptObj) //解壓縮密文
+    this.decrypted = function(ciphertext, secret) {
+        ciphertext = LZString.decompress(ciphertext) //解壓縮密文
+        
         //解密並將密文還原成資料
-        const ciphertext = CryptoJS.AES.decrypt(encryptObj, secret, {
-            format: this.formatter,
-            salt,
-            iv
+        //ciphertext stringify to cipherParams
+        const plaintext = CryptoJS.AES.decrypt(ciphertext, secret, {
+            format: this.formatter
         }).toString(CryptoJS.enc.Utf8)
         
-        return JSON.parse(ciphertext)
+        return JSON.parse(plaintext)
     }
 }

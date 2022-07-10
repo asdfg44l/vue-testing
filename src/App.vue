@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="`vh-100 theme-${$theme}`">
+  <div id="app" :class="`vh-100--min theme-${$theme}`">
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <h1 class="navbar-brand m-0">來個小測驗</h1>

@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto">
     <div class="row mt-3">
-      <div class="col-12">
+      <div class="col-12" v-if="!loading">
         <div class="custom-list" v-if="pairList.length > 0">
           <div class="list-header d-flex justify-content-between sticky-top">
             <div class="d-flex align-items-center">
@@ -101,11 +101,13 @@ export default {
         location: '',
         searchText: ''
       },
-      userList: []
+      userList: [],
+      loading: false,
     }
   },
   methods: {
     getUsers() {
+      this.loading = true //loading
       this.axios.get('https://randomuser.me/api/?results=50')
       .then( res => {
         const results = res.data.results
@@ -120,6 +122,7 @@ export default {
             imgUrl: item.picture.large
           }
         })
+        this.$nextTick(() => this.loading = false)
       })
     }
   },
@@ -149,6 +152,10 @@ export default {
   },
   created() {
     this.getUsers()
+  },
+  mounted() {
+    this.$store.commit('TESTID', 'aaa')
+    console.log(this.$store.state)
   }
 }
 </script>

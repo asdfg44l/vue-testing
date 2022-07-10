@@ -2,7 +2,7 @@
     <div>
         <div class="marquee-layout d-flex">
             <div class="p-2 bg-info text-white"><i class="fas fa-exclamation-triangle"></i></div>
-            <div 
+            <div
                 class="marquee"
                 v-marquee
                 v-if="Mswitch"
@@ -24,7 +24,6 @@
             {{ Mswitch ? '暫停' : '啟動' }}
         </button>
     </div>
-    
 </template>
 
 <script>

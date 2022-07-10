@@ -58,7 +58,6 @@ describe('測試 CustomInput元件是否正確生成', () => {
     })
     const new_input = wrapperCustomInput.find('input')
 
-    console.log('++++', wrapperCustomInput)
     it('tagName 是否為 input:radio', () => {
       expect(new_input).toBeDefined()
       expect(new_input.attributes('type')).toBe('radio')

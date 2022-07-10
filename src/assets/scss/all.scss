@@ -51,6 +51,10 @@
 @import './customTheme';
 @import './animation';
 
+//global
+.vh-100--min {
+    min-height: 100vh !important;
+}
 
 //list
 .custom-list {

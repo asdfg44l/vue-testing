@@ -32,7 +32,8 @@ const routes = [
     component: () => import(/* webpackChunkName: "CryptoTest" */ '../views/CryptoTest.vue'),
     meta: {
       title: '加密',
-      description: "資料加密與壓縮測試"
+      description: "資料加密與壓縮測試",
+      redirect: 'Home'
     }
   }
 ]
@@ -53,6 +54,10 @@ router.beforeEach((to, from, next) => {
 
     description.content = to.meta.description
   }
+
+  // if(to.meta.redirect) {
+  //   next({ name: to.meta.redirect })
+  // }
 
   next()
 })

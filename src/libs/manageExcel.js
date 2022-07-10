@@ -1,12 +1,12 @@
 import XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-// import { Array } from 'core-js';
 
 //type check (這裡以後可以改用 TS)
 const _isArray = (arr) => {
     return arr.constructor === Array
 }
-// 取出 jsonDataList中需要的資料, 以及套用資料格式
+// 取出 jsonDataList中需要的資料, 以及套用資料格式, 並生成二維陣列
+//[[...header], [...content], [...content]...]
 const _jsonList_to_aoa = ({ jsonDataList, attrs_to_show, excel_header = attrs_to_show, data_format = {} }) => {
     if(!_isArray(jsonDataList)) throw new Error('json 資料必須為 Array')
     if(!_isArray(attrs_to_show)) throw new Error('呈現屬性必須為 Array')
@@ -56,9 +56,8 @@ export function Workbook() {
 
     //塞入 Sheet
     this.appendSheet = function(config_to_generate_excel, name = `sheet${this.SheetNames.length + 1}`) {
-        const sheet = this.jsonDataList_to_sheet(config_to_generate_excel)
+        this.Sheets[name] = this.jsonDataList_to_sheet(config_to_generate_excel)
         this.SheetNames = [...this.SheetNames, name]
-        this.Sheets[name] = sheet
     };
 
     //生成 Blob
@@ -69,7 +68,7 @@ export function Workbook() {
             var view = new Uint8Array(buf)
 
             for(let i=0; i<str.length; i++) {
-                view[i] = str.charCodeAt(i) & '0xFF'
+                view[i] = str.charCodeAt(i) & 0xFF
             }
 
             return buf
@@ -87,8 +86,8 @@ export function Workbook() {
     }
 }
 
-//json to csv
-export function jsonList_to_CSV() {
+//jsonList to csv
+export function JsonListToCSV() {
 
     this._CSV = '';
     this.blob;
@@ -101,17 +100,27 @@ export function jsonList_to_CSV() {
             console.log(event)
             return
         }
+        //format
         result.forEach(d => {
             this._CSV += d.join(',') + '\n'
         })
     }
 
+    this.toBlob = function() {
+        //取得BOM頭以正常閱讀, https://stackoverflow.com/questions/42462764/javascript-export-csv-encoding-utf-8-issue
+        const BOM = "\ufeff"
+
+        this.blob = new Blob([ BOM + this._CSV ], { type: 'text/csv' })
+    }
+
     //save csv
     this.saveAs = function(filename) {
-        let link = document.createElement('a');
-        link.setAttribute('href', 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(this._CSV));
-        link.setAttribute('download', `${filename}.csv`);
-        link.click();
+        if(!filename) throw new Error("檔案名稱不得為空")
+        saveAs(this.blob, `${filename}.csv`)
+        // let link = document.createElement('a');
+        // link.setAttribute('href', 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(this._CSV));
+        // link.setAttribute('download', `${filename}.csv`);
+        // link.click();
     }
 }
 
